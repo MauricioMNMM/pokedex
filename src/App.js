@@ -48,7 +48,7 @@ function NavBar({ onChange, value }) {
           src="https://img.icons8.com/plasticine/2x/open-pokeball.png"
           alt="bokeball"
         />
-        <h2>Pokemons</h2>
+        <h2 className="mb-4">Pokemons</h2>
       </div>
       <div className="nav-search-submit">
         <form>
@@ -91,25 +91,41 @@ class Target extends React.Component {
         this.setState({ pokemon: json });
       });
   }
+  getTypeColor = (type) => {
+    const TYPE_COLORS = {
+      water: "blue-500",
+      fire: "red-500",
+      grass: "green-400",
+      bug: "green-500",
+      normal: "gray-400",
+      electric: "yellow-400",
+      ground: "",
+      poison: "purple-500",
+      fighting: "",
+      fairy: "pink-300",
+      psychic: "yellow-600",
+      rock: "gray-600",
+      ghost: "gray-400",
+    };
+    return TYPE_COLORS[type] || "gray-500";
+  };
   render() {
     const { pokemon } = this.state;
+    const color = this.getTypeColor(pokemon.types[0]?.type.name);
     return (
-      <div className="tarjeta capitalize">
-        {this.state.pokemon.sprites !== undefined && (
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-        )}
-        <div className="m-3 text-lg">
-          <h3 className="text-center">{pokemon.name}</h3>
-          <div className="flex justify-around m-3">
+      <div className={`tarjeta capitalize bg-${color}`}>
+        <div className="estadisticas">
+          <h3 className="name">{pokemon.name}</h3>
+          <div className="tipoText">
             {this.state.pokemon.types.map((type) => {
-              return (
-                <p className={`bg-blue-500 p-1 rounded text-white text-xl`}>
-                  {type.type.name}
-                </p>
-              );
+              return <p className="tipo">{type.type.name}</p>;
             })}
           </div>
         </div>
+        {this.state.pokemon.sprites !== undefined && (
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        )}
+        <samp className="num">#{}</samp>
       </div>
     );
   }
