@@ -103,7 +103,7 @@ class Target extends React.Component {
           <div className="flex justify-around m-3">
             {this.state.pokemon.types.map((type) => {
               return (
-                <p className={"bg-blue-500 p-1 rounded text-white text-xl"}>
+                <p className={`bg-blue-500 p-1 rounded text-white text-xl`}>
                   {type.type.name}
                 </p>
               );
