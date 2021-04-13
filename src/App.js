@@ -125,7 +125,7 @@ class Target extends React.Component {
         {this.state.pokemon.sprites !== undefined && (
           <img src={pokemon.sprites.front_default} alt={pokemon.name} />
         )}
-        <samp className="num">#{}</samp>
+        <samp className="num">#{pokemon.id}</samp>
       </div>
     );
   }
