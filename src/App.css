@@ -1,3 +1,6 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 .nav {
   width: 100%;
   background-color: tomato;
@@ -17,6 +20,7 @@
 .nav-img-title h2 {
   color: aliceblue;
   font-size: 25px;
+  font-family: "Pokemon Solid";
 }
 .nav-search-submit {
   display: flex;
@@ -35,6 +39,7 @@
   background-color: rgb(194, 194, 194);
 }
 .tarjeta {
+  box-shadow: -10px 6px 18px 1px #000000;
   width: 230px;
   border: 1px solid rgb(130, 130, 130);
   background-color: white;
@@ -46,15 +51,4 @@
   object-fit: contain;
   margin: auto;
   margin: 0px;
-}
-.estadisticas {
-  background-color: rgb(237, 237, 237);
-}
-.estadisticas h3 {
-  padding: 10px;
-}
-.div-tarjetas {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
