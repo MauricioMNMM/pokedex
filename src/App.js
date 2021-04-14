@@ -109,6 +109,10 @@ class Target extends React.Component {
     };
     return TYPE_COLORS[type] || "gray-500";
   };
+  onClick = (hover) => {
+    hover.preventDefault();
+    // alert("Hola");
+  };
   render() {
     const { pokemon } = this.state;
     const color = this.getTypeColor(pokemon.types[0]?.type.name);
@@ -123,7 +127,11 @@ class Target extends React.Component {
           </div>
         </div>
         {this.state.pokemon.sprites !== undefined && (
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <img
+            src={pokemon.sprites.front_default}
+            onMouseEnter={this.onClick}
+            alt={pokemon.name}
+          />
         )}
         <samp className="num">#{pokemon.id}</samp>
       </div>

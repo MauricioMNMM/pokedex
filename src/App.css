@@ -46,6 +46,9 @@
   margin: 20px;
   position: relative;
 }
+.tarjeta:hover {
+  transform: scale(1.1);
+}
 .tarjeta img {
   height: 130px;
   width: 120px;
@@ -91,7 +94,7 @@
   color: white;
   font-size: 20px;
 }
-@media (max-width: 420px) {
+@media (max-width: 582px) {
   .tarjeta {
     width: 175px;
     margin: 10px;
@@ -121,17 +124,32 @@
     border-radius: 5px;
     width: 100%;
   }
+  .num {
+    margin: 0;
+    margin-left: 10px;
+  }
 }
-@media (max-width: 372px) {
+@media (max-width: 387px) {
   .tarjeta {
-    width: 240px;
+    width: 260px;
     margin: 10px;
     height: 160px;
   }
   .tarjeta img {
-    height: 100px;
-    width: 120px;
+    height: 120px;
+    width: 150px;
     object-fit: cover;
     position: absolute;
+  }
+  .nav-search-submit form {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .nav-search-submit form input {
+    left: 0;
+    padding: 5px;
+    border-radius: 5px;
+    width: 120px;
   }
 }
