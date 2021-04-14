@@ -82,6 +82,7 @@ class Target extends React.Component {
         sprites: {},
         types: [],
       },
+      isHover: false,
     };
   }
   componentDidMount() {
@@ -109,9 +110,13 @@ class Target extends React.Component {
     };
     return TYPE_COLORS[type] || "gray-500";
   };
-  onClick = (hover) => {
-    hover.preventDefault();
-    // alert("Hola");
+  handleMouseEnter = (event) => {
+    event.preventDefault();
+    this.setState({ isHover: true });
+  };
+  handleMouseLeave = (event) => {
+    event.preventDefault();
+    this.setState({ isHover: false });
   };
   render() {
     const { pokemon } = this.state;
@@ -128,8 +133,13 @@ class Target extends React.Component {
         </div>
         {this.state.pokemon.sprites !== undefined && (
           <img
-            src={pokemon.sprites.front_default}
-            onMouseEnter={this.onClick}
+            src={
+              this.state.isHover
+                ? pokemon.sprites.back_default
+                : pokemon.sprites.front_default
+            }
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
             alt={pokemon.name}
           />
         )}
