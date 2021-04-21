@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 function Pokemons({ data }) {
   return (
@@ -9,25 +10,20 @@ function Pokemons({ data }) {
     </div>
   );
 }
-class Target extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pokemon: {
-        sprites: {},
-        types: [],
-      },
-      isHover: false,
-    };
-  }
-  componentDidMount() {
-    fetch(this.props.url)
+function Target({ url }) {
+  const [pokemon, setPokemon] = useState({ sprites: {}, types: [] });
+  const [isHover, setIsHover] = useState(false);
+
+  useEffect(() => {
+    fetch(url)
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ pokemon: json });
+        setPokemon(json);
+        setIsHover(false);
       });
-  }
-  getTypeColor = (type) => {
+  }, []);
+
+  const getTypeColor = (type) => {
     const TYPE_COLORS = {
       water: "blue-500",
       fire: "red-500",
@@ -45,42 +41,41 @@ class Target extends React.Component {
     };
     return TYPE_COLORS[type] || "gray-500";
   };
-  handleMouseEnter = (event) => {
+
+  const handleMouseEnter = (event) => {
     event.preventDefault();
-    this.setState({ isHover: true });
+    setIsHover(true);
   };
-  handleMouseLeave = (event) => {
+  const handleMouseLeave = (event) => {
     event.preventDefault();
-    this.setState({ isHover: false });
+    setIsHover(false);
   };
-  render() {
-    const { pokemon } = this.state;
-    const color = this.getTypeColor(pokemon.types[0]?.type.name);
-    return (
-      <div className={`tarjeta capitalize bg-${color}`}>
-        <div className="estadisticas">
-          <h3 className="name">{pokemon.name}</h3>
-          <div className="tipoText">
-            {this.state.pokemon.types.map((type) => {
-              return <p className="tipo">{type.type.name}</p>;
-            })}
-          </div>
+
+  const color = getTypeColor(pokemon.types[0]?.type.name);
+  return (
+    <div className={`tarjeta capitalize bg-${color}`}>
+      <div className="estadisticas">
+        <h3 className="name">{pokemon.name}</h3>
+        <div className="tipoText">
+          {pokemon.types.map((type) => {
+            return <p className="tipo">{type.type.name}</p>;
+          })}
         </div>
-        {this.state.pokemon.sprites !== undefined && (
-          <img
-            src={
-              this.state.isHover
-                ? pokemon.sprites.back_default
-                : pokemon.sprites.front_default
-            }
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-            alt={pokemon.name}
-          />
-        )}
-        <samp className="num">#{pokemon.id}</samp>
       </div>
-    );
-  }
+      {pokemon.sprites !== undefined && (
+        <img
+          src={
+            isHover
+              ? pokemon.sprites.back_default
+              : pokemon.sprites.front_default
+          }
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          alt={pokemon.name}
+        />
+      )}
+      <samp className="num">#{pokemon.id}</samp>
+    </div>
+  );
 }
 export default Pokemons;

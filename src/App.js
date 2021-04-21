@@ -1,45 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Pokemons from "./components/Pokemons";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pokemons: [],
-      search: "",
-    };
-  }
-  componentDidMount() {
+function App() {
+  const [pokemons, setPokemons] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon/?limit=100")
       .then((response) => response.json())
       .then((pokemonsJson) => {
-        this.setState({
-          pokemons: pokemonsJson.results,
-        });
+        setPokemons(pokemonsJson.results);
+        setSearch("");
       });
-  }
+  }, []);
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setSearch(value);
   };
 
-  filterPokemons = () => {
-    const search = this.state.search.toLowerCase();
-    return this.state.pokemons.filter((pokemon) =>
-      pokemon.name.startsWith(search)
-    );
+  const filterPokemons = () => {
+    const buscar = search.toLowerCase();
+    return pokemons.filter((pokemon) => pokemon.name.startsWith(buscar));
   };
-  render() {
-    const data = this.filterPokemons();
-    return (
-      <div>
-        <NavBar onChange={this.handleChange} value={this.state.search} />
-        <Pokemons data={data} />
-      </div>
-    );
-  }
+
+  const data = filterPokemons();
+  return (
+    <div>
+      <NavBar onChange={handleChange} value={search} />
+      <Pokemons data={data} />
+    </div>
+  );
 }
+
 export default App;
